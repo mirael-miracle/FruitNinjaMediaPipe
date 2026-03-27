@@ -8,10 +8,11 @@ public class InputUpdater : MonoBehaviour
     {
         //Debug.Log(HandTrackingReceiver.Position);
         //Debug.Log(HandTrackingReceiver.Gesture);
+        Debug.Log($"Hand Pos: {HandTrackingReceiver.Position} | Gesture: {HandTrackingReceiver.Gesture}");
         Vector2 mp = HandTrackingReceiver.Position;
 
         // инверсия Y (MediaPipe → Unity)
-        //mp.y = 1f - mp.y;
+        mp.y = 1f - mp.y;
 
         // при необходимости раскомментируй:
         mp.x = 1f - mp.x;

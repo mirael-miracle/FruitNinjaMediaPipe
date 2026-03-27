@@ -1,4 +1,4 @@
-using UnityEngine;
+п»їusing UnityEngine;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -44,8 +44,9 @@ public class HandTrackingReceiver : MonoBehaviour
 
     void ParseJson(string json)
     {
-        // очень быстрый парсинг без аллокаций JSON-парсера
-        json = json.Replace("{", "").Replace("}", "").Replace("\"", "");
+        // РЈР±РёСЂР°РµРј Р»РёС€РЅРµРµ + СѓР±РёСЂР°РµРј РїСЂРѕР±РµР»С‹ РїРѕ РєСЂР°СЏРј
+        json = json.Replace("{", "").Replace("}", "").Replace("\"", "").Trim();
+
         string[] parts = json.Split(',');
 
         float x = 0.5f, y = 0.5f;
@@ -56,14 +57,15 @@ public class HandTrackingReceiver : MonoBehaviour
             string[] kv = part.Split(':');
             if (kv.Length != 2) continue;
 
-            if (kv[0] == "x")
-                float.TryParse(kv[1], NumberStyles.Float, CultureInfo.InvariantCulture, out x);
+            string key = kv[0].Trim();      // в†ђв†ђв†ђ Р’РѕС‚ Рё РІРµСЃСЊ С„РёРєСЃ!
+            string val = kv[1].Trim();
 
-            if (kv[0] == "y")
-                float.TryParse(kv[1], NumberStyles.Float, CultureInfo.InvariantCulture, out y);
-
-            if (kv[0] == "gesture")
-                gesture = kv[1];
+            if (key == "x")
+                float.TryParse(val, NumberStyles.Float, CultureInfo.InvariantCulture, out x);
+            else if (key == "y")
+                float.TryParse(val, NumberStyles.Float, CultureInfo.InvariantCulture, out y);
+            else if (key == "gesture")
+                gesture = val;
         }
 
         Position = new Vector2(x, y);
