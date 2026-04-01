@@ -8,14 +8,15 @@ public class InputUpdater : MonoBehaviour
     {
         //Debug.Log(HandTrackingReceiver.Position);
         //Debug.Log(HandTrackingReceiver.Gesture);
-        Debug.Log($"Hand Pos: {HandTrackingReceiver.Position} | Gesture: {HandTrackingReceiver.Gesture}");
+        //Debug.Log($"Hand Pos: {HandTrackingReceiver.Position} | Gesture: {HandTrackingReceiver.Gesture}");
         Vector2 mp = HandTrackingReceiver.Position;
 
         // inversion Y (MediaPipe → Unity)
         mp.y = 1f - mp.y;
 
         // for my webcamera
-        mp.x = 1f - mp.x;
+        if (CameraSettings.MirrorX)
+            mp.x = 1f - mp.x;
 
         Vector2 screenPos = new Vector2(
             mp.x * Screen.width,

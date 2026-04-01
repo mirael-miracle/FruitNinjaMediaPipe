@@ -44,7 +44,6 @@ public class HandTrackingReceiver : MonoBehaviour
 
     void ParseJson(string json)
     {
-        // Убираем лишнее + пробелы
         json = json.Replace("{", "").Replace("}", "").Replace("\"", "").Trim();
 
         string[] parts = json.Split(',');

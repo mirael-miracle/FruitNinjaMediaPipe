@@ -1,6 +1,7 @@
 -a="D:\fruit_ninja_unity\unity-fruit-ninja-tutorial\Library\PlayerScriptAssemblies\Assembly-CSharp.dll"
 -a="D:\fruit_ninja_unity\unity-fruit-ninja-tutorial\Library\PlayerScriptAssemblies\UnityEngine.TestRunner.dll"
 -a="D:\fruit_ninja_unity\unity-fruit-ninja-tutorial\Library\PlayerScriptAssemblies\Unity.TextMeshPro.dll"
+-a="D:\fruit_ninja_unity\unity-fruit-ninja-tutorial\Library\PlayerScriptAssemblies\Unity.InputSystem.dll"
 -a="D:\fruit_ninja_unity\unity-fruit-ninja-tutorial\Library\PlayerScriptAssemblies\UnityEngine.UI.dll"
 -a="D:\fruit_ninja_unity\unity-fruit-ninja-tutorial\Library\PackageCache\com.unity.ext.nunit@1.0.6\net35\unity-custom\nunit.framework.dll"
 -s="D:\Unity\Hub\Editor\2020.3.48f1\Editor\Data\Managed\UnityEngine"
