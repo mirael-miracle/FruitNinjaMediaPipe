@@ -48,13 +48,6 @@ while True:
     # обработка
     results = hands.process(rgb)
 
-    # дефолтные значения
-    data = {
-        "x": 0.5,
-        "y": 0.5,
-        "gesture": "none"
-    }
-
     if results.multi_hand_landmarks:
         hand_landmarks = results.multi_hand_landmarks[0]
 
@@ -69,31 +62,33 @@ while True:
         index_tip = hand_landmarks.landmark[8]
         index_pip = hand_landmarks.landmark[6]
 
-        data["x"] = float(index_tip.x)
-        data["y"] = float(index_tip.y)
+        x = float(index_tip.x)
+        y = float(index_tip.y)
 
         # -------- детекция жеста --------
-        # простой вариант:
-        # если указательный палец "вверх" относительно сустава → one_finger
         if index_tip.y < index_pip.y:
             gesture = "one_finger"
         else:
             gesture = "open"
 
-        data["gesture"] = gesture
+        # -------- отправка ТОЛЬКО когда рука видна --------
+        data = {
+            "x": x,
+            "y": y,
+            "gesture": gesture
+        }
+
+        try:
+            print(data)                    # оставил для отладки
+            message = json.dumps(data).encode("utf-8")
+            sock.sendto(message, (UDP_IP, UDP_PORT))
+        except Exception as e:
+            print("UDP send error:", e)
 
         # визуализация точки
         h, w, _ = frame.shape
         cx, cy = int(index_tip.x * w), int(index_tip.y * h)
         cv2.circle(frame, (cx, cy), 10, (0, 255, 0), -1)
-
-    # -------- отправка --------
-    try:
-        print(data)
-        message = json.dumps(data).encode("utf-8")
-        sock.sendto(message, (UDP_IP, UDP_PORT))
-    except Exception as e:
-        print("UDP send error:", e)
 
     # -------- FPS --------
     current_time = time.time()
@@ -103,8 +98,8 @@ while True:
     cv2.putText(frame, f"FPS: {int(fps)}", (10, 30),
                 cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 255), 2)
 
-    cv2.putText(frame, f"Gesture: {data['gesture']}", (10, 70),
-                cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)
+    cv2.putText(frame, f"Gesture: {'none' if not results.multi_hand_landmarks else gesture}", 
+                (10, 70), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)
 
     # -------- отображение --------
     cv2.imshow("Hand Tracking UDP Sender", frame)

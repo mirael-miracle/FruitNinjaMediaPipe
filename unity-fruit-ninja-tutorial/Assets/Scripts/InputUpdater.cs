@@ -11,10 +11,10 @@ public class InputUpdater : MonoBehaviour
         Debug.Log($"Hand Pos: {HandTrackingReceiver.Position} | Gesture: {HandTrackingReceiver.Gesture}");
         Vector2 mp = HandTrackingReceiver.Position;
 
-        // инверсия Y (MediaPipe → Unity)
+        // inversion Y (MediaPipe → Unity)
         mp.y = 1f - mp.y;
 
-        // при необходимости раскомментируй:
+        // for my webcamera
         mp.x = 1f - mp.x;
 
         Vector2 screenPos = new Vector2(
@@ -22,7 +22,7 @@ public class InputUpdater : MonoBehaviour
             mp.y * Screen.height
         );
 
-        // сглаживание
+        // smooth for blade
         smooth = Vector2.Lerp(smooth, screenPos, 0.2f);
 
         CustomInput.Position = smooth;

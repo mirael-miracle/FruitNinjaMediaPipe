@@ -44,7 +44,7 @@ public class HandTrackingReceiver : MonoBehaviour
 
     void ParseJson(string json)
     {
-        // Убираем лишнее + убираем пробелы по краям
+        // Убираем лишнее + пробелы
         json = json.Replace("{", "").Replace("}", "").Replace("\"", "").Trim();
 
         string[] parts = json.Split(',');
@@ -57,7 +57,7 @@ public class HandTrackingReceiver : MonoBehaviour
             string[] kv = part.Split(':');
             if (kv.Length != 2) continue;
 
-            string key = kv[0].Trim();      // ←←← Вот и весь фикс!
+            string key = kv[0].Trim();
             string val = kv[1].Trim();
 
             if (key == "x")
@@ -68,8 +68,11 @@ public class HandTrackingReceiver : MonoBehaviour
                 gesture = val;
         }
 
-        Position = new Vector2(x, y);
-        Gesture = gesture;
+        if (gesture != "none")
+        {
+            Position = new Vector2(x, y);   // update state if only hand in camera
+        }
+        Gesture = gesture;   // update gesture every frame for state control
     }
 
     void OnApplicationQuit()

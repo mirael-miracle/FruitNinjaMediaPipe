@@ -47,10 +47,8 @@ public class Blade : MonoBehaviour
 
     private void StartSlice()
     {
-        // ←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←
         Vector3 screenPos = new Vector3(CustomInput.Position.x, CustomInput.Position.y, 0f);
         Vector3 position = mainCamera.ScreenToWorldPoint(screenPos);
-        // ←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←
 
         position.z = 0f;
         transform.position = position;
@@ -70,10 +68,8 @@ public class Blade : MonoBehaviour
 
     private void ContinueSlice()
     {
-        // ←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←
         Vector3 screenPos = new Vector3(CustomInput.Position.x, CustomInput.Position.y, 0f);
         Vector3 newPosition = mainCamera.ScreenToWorldPoint(screenPos);
-        // ←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←
 
         newPosition.z = 0f;
         direction = newPosition - transform.position;
